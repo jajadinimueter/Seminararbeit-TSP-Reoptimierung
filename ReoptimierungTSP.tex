@@ -81,7 +81,7 @@ höchsten so lange machen, bis der Winkel $180^\degree$ beträgt und $c = a + b$
 wird $c$ wieder kleiner.
 
 \begin{figure}
-\includegraphics[width=0.8\textwidth]{triangle_inequ.png}
+\includegraphics[width=0.8\textwidth]{triangle_inequality1.png}
 \caption{Dreiecksungleichung}
 \label{fig:trangle-inequality}
 \end{figure}
@@ -182,7 +182,7 @@ Die optimale Tour $\overline{C}$ ist in Abbildung \ref{fig:lm-tsp-proof-step2} e
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{lm_tsp_proof_step2.png}
+\includegraphics[width=0.8\textwidth]{lm_tsp_hard_new1.png}
 \caption{}
 \label{fig:lm-tsp-proof-step2}
 \end{figure}
@@ -191,7 +191,7 @@ Die optimale Tour $\overline{C}$ ist in Abbildung \ref{fig:lm-tsp-proof-step2} e
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{lm_tsp_proof_step3.png}
+\includegraphics[width=0.8\textwidth]{lm_tsp_hard_new2.png}
 \caption{}
 \label{fig:lm-tsp-proof-step3}
 \end{figure}
@@ -243,11 +243,43 @@ Der Beweis ist eine Reduktion vom Eingeschränkten Hamilton-Kreis Problem (RHC),
 
 \subsection{Ein Approximationsalgorithmus}
 
+Zuerst stellen wir etwas in einem Lemma fest, welches wir danach im Beweis brauchen werden:
+
+\newtheorem{lemma1}{Lemma}
+
+\begin{lemma1}
+Sei $G = (V, E)$ ein Graph. Seien $c_1$ und $c_2$ Kostenfunktionen auf diesem Graphen, die in genau einer Kante $e$ unterschiedlich sind und für die gilt $c_1(e) \le c_2(e)$. Seien und $\beta_1, \beta_2 \ge 1$ durch $c_1$ und $c_2$ auf $E$ gegeben. Dann gilt, jede Kante, die direkt an $e$ anschliesst hat mindestens die Kosten $\frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_1\beta_2 + \beta_2}$. Im Spezialfall $\beta_1 = \beta_2 = 1$ sind die Kosten mindestens $\frac{1}{2} \cdot (c_2(e) - c_1(2))$.
+\end{lemma1}
+
+\begin{proof}[Beweis]
+Sei $G = (V, E)$ ein Graph. Seien $c_1$ und $c_2$ Kostenfunktionen auf diesem Graphen, die in genau einer Kante $e$ unterschiedlich sind. Wähle zwei an $e$ anschliessende Kanten $\{f, f'\}$ mit $f \not= f'$. Seien und $\beta_1, \beta_2 \ge 1$ durch $c_1$ und $c_2$ auf $E$ gegeben. 
+
+Dann gilt
+
+\[ c_2(e) \le \beta_2 \cdot (c_2(f) + c_2(f')) \]
+
+und 
+
+\[ c(f') \le \beta_1 \cdot (c_1(f) + c_1(e)) \]
+
+Daraus folgt:
+
+$ c_2(e) \le \beta_2 \cdot [c_2(f) + \beta_1 \cdot (c_1(f) + c_1(e))] $ $ = c_2(e) \le \beta_2 c_2(f) + \beta_1\beta_2 c_1(f) + \beta_1\beta_2 c_1(e) $ $ = c_2(e) - \beta_1\beta_2 c_1(e) \le \beta_2 c_2(f) + \beta_1\beta_2 c_1(f) $ $ = \frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_2} \le c_2(f) + \beta_1 c_1(f) $ $ = \frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_2} \le c_2(f)(1 + \beta_1) $ $ = \frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_2(1 + \beta_1)} \le c_2(f) $ $ = \frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_2 + \beta_1\beta_2)} \le c_2(f) $
+
+und somit:
+
+\[ c_2(f) \ge  \frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_2 + \beta_1\beta_2} \]
+
+der gleiche Beweis kann auf dieselbe Weise für $c_1$ geführt werden.
+\end{proof}
+
+
+
 Obwohl für $LM-\triangle_\beta-TSP$ kein Algorithmus existiert, der das Problem in Polynomialzeit exakt löst, können wir immer noch auf einen polynomiellen Approximationsalgorithmus mit konstanter relativer Güte hoffen. Tatsächlich haben H.-J. Böckenhauer et. al. (\cite{bok1}, \cite{bok2}) gezeigt, dass es einen solchen Algorithmus gibt, welcher das Problem in Abhängigkeit von $\beta$ (und nicht in Abhängigkeit der Anzahl Knoten $n$) approximiert. Er garantiert eine  relative Güte von
 
 \[ \beta_L\beta_H \cdot \frac{15\beta_L^2 + 5\beta_L - 6}{10\beta_L^2 + 3\beta_L\beta_H + 3\beta_H -6} \]
 
-für Graphenpaare $\{G_O, G_N\}$, so dass $G_O$ die $\triangle_{\beta_O}$-Ungleichung und $G_N$ die $\triangle_{\beta_N}$-Ungleichung erfüllt und $\beta_L := \min(\beta_O,\beta_N)$ und $\beta_H := \max(\beta_O,\beta_N)$. 
+für Eingaben $I = (G, c_O, c_N)$ mit $G = (V, E)$, so dass $c_O$ die $\triangle_{\beta_O}$-Ungleichung und $c_N$ die $\triangle_{\beta_N}$-Ungleichung auf $E$ erfüllt und $\beta_L := \min(\beta_O,\beta_N)$ und $\beta_H := \max(\beta_O,\beta_N)$. 
 
 Das heisst, die Kostenfunktion $c_O$ ist so konstruiert, dass $c_O(\{u,w\}) = \beta_O \cdot (c_O(\{u,v\}) + c_O(\{v,w\}))$. $c_N$ unterscheidet sich in genau einer Kante und erfüllt die Dreiecksungleichung $c_N(\{u,w\}) = \beta_N \cdot (c_N(\{u,v\}) + c_N(\{v,w\}))$. Beide Graphen $G_O$ und $G_N$ enthalten dieselben Knoten und Kante $V$ und $E$.
 
