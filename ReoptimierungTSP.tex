@@ -157,12 +157,12 @@ Es ist allgemein bekannt, dass falls $P \not= NP$, es keinen polynomiellen Appro
 
 Wir zeigen anhand eines Beweises von H.-J.-Böckenhauer et al. (\cite{bok1}), dass dies auch für $LM-TSP$ gilt. Das heisst, das Problem wird nicht leichter, obwohl die Änderung nur eine einzige Kante betrifft und eine optimale Lösung für das Originalproblem bereits ermittelt wurde.
 
-Des weiteren wird gezeigt, dass das Problem einfacher wird, wenn wir fordern, dass die $\beta-$-Dreiecksungleichung eingehalten werden muss. Daraus ergibt sich das Problem $lm-\triangle_\beta-TSP$. H.-J. Böckenhauer et. al. (\cite{bok1}, \cite{bok2}) konnten für eine Teilklasse dieser Probleme mit $\beta > \frac{1}{2}$ zeigen, dass dieses Problem weiterhin NP-schwer ist, dass jedoch ein polynomieller Approximationsalgorithmus mit konstanter relativer Güte existiert, welche nur vom Parameter $\beta$ abhängt. Die relative Güte verbessert sich im metrischen Fall $lm-\triangle_1-TSP = lm-\triangle-TSP$ gegenüber der bisher durch den Algorithmus von Christofides erreichten 1.5 auf 1.4 und schlägt auch im Bereich von $1 < \beta < 3.34899$ alle bisher bekannte Algorithmen (\cite{bok1} S. 253).
+Des weiteren wird gezeigt, dass das Problem einfacher wird, wenn wir fordern, dass die $\beta$-Dreiecksungleichung eingehalten werden muss. Daraus ergibt sich das Problem $LM-\triangle_\beta-TSP$. H.-J. Böckenhauer et al. (\cite{bok1}, \cite{bok2}) konnten für eine Teilklasse dieser Probleme mit $\beta > \frac{1}{2}$ zeigen, dass dieses Problem weiterhin NP-schwer ist, dass jedoch ein polynomieller Approximationsalgorithmus mit konstanter relativer Güte existiert, welche nur vom Parameter $\beta$ abhängt. Die relative Güte verbessert sich im metrischen Fall $LM-\triangle_1-TSP = LM-\triangle-TSP$ gegenüber der bisher durch den Algorithmus von Christofides erreichten 1.5 auf 1.4 und schlägt auch im Bereich von $1 < \beta < 3.34899$ alle bisher bekannte Algorithmen (\cite{bok1} S. 253).
 
 %Schlussendlich wird anhand H.-J. Böckenhauer et. al. (\cite{bok2}) bewiesen, 
 %dass im Fall des TSP mit Deadlines $LM-DL-TSP$ jeder polynomielle Approximationsalgorithmus für die relative Güte eine untere Schranke von $(2-\epsilon)$ für jedes $\epsilon > 0$ nicht unterschreiten kann. Diese Schranke gilt auch für dagezeigtens Originalproblem $DL-TSP$, was uns zeigt, dass wir im Fall von $LM-DL-TSP$ keinen Vorteil daraus gewinnen können, dass wir bereits eine Lösung für das Originalproblem kennen.
 
-Alle Beweise basieren auf den Arbeiten \cite{bok1} und \cite{bok2} von H.-J. Böckenhauer et. al.
+Alle Beweise basieren auf den Arbeiten \cite{bok1} und \cite{bok2} von H.-J. Böckenhauer et al.
 
 \section{Die Schwere von $LM-TSP$}
 
@@ -173,15 +173,15 @@ Es gibt für $LM-TSP$ keinen polynomiellen Approximationsalgorithmus (ausser $P 
 \end{t1}
 
 \begin{proof}[Beweis]
-Dazu führen wir eine Reduktion vom Hamilton-Kreis $HC$ Problem auf $LM-TSP$ durch.
+Dazu führen wir eine Reduktion vom Hamilton-Kreis Problem $HC$ auf $LM-TSP$ durch.
 
 \[HC \prec LM-TSP \]
 
 \textbf{Hamilton-Kreis-Problem} Es ist ein ungerichteter Graph $G = (V, E)$ mit $V = \{v_1, \dots, v_n\}$ und $E = \{e_1, \dots, e_k\}$ ohne Kantengewichte gegeben. Gesucht wird die Entscheidung, ob $G$ ein Hamilton-Kreis besitzt oder nicht.
 
-\textbf{Reduktion} Der ungerichtete Graph $G$ wird zuerst in einen ungerichteten \emph{vollständigen} Graphen $G_O = (V', E')$ mit einer Kostenfunktion $c_O$ umgewandelt. Dieser Graph wird so konstruiert, dass eine optimale Tour $\overline{C}$ offensichtlich ist. Danach werden die Kosten einer einzigen Kante so verändert (neue Kostenfunktion $c_N$), dass die Tour $\overline{C}$ nicht mehr optimal ist. Eine weitere optimale Tour entspräche nun genau einem Hamilton-Kreis in G und umgekehrt: ein Hamilton-Kreis in G entspräche genau einer optimalen Tour in $G_O$ unter der neuen Kostenfunktion $c_A$. 
+\textbf{Reduktion} Der ungerichtete Graph $G$ wird zuerst in einen ungerichteten \emph{vollständigen} Graphen $G_O = (V', E')$ mit einer Kostenfunktion $c_O$ umgewandelt. Dieser Graph wird so konstruiert, dass eine optimale Tour $\overline{C}$ offensichtlich ist. Danach werden die Kosten einer einzigen Kante so verändert (neue Kostenfunktion $c_N$), dass die Tour $\overline{C}$ nicht mehr optimal ist. Eine weitere optimale Tour entspräche nun genau einem Hamilton-Kreis in G und umgekehrt: ein Hamilton-Kreis in G entspräche genau einer optimalen Tour in $G_O$ unter der neuen Kostenfunktion $c_N$. 
 
-\textbf{Schritt 1} Für jeden Knoten $v_i \in V$ wird ein sogenannter Diamant-Graph erstellt. Alle Kantenkosten sind dabei genau 1. (Abbildung \ref{fig:lm-tsp-proof-step1}). Die Bezeichner ${N_i, E_i, S_i, W_i}$ stehen dabei für north, east, south und west. Das Spezielle an diesen Diamantgraphen ist, dass sie so konstruiert sind, dass es genau zwei Wege durch sie hindurch gibt, möchte man jeden Knoten genau einmal besuchen. 1) West $\rightleftarrows$ Ost 2) Nord $\rightleftarrows$ Süd (Abbildung \ref{fig:lm-tsp-proof-step1-ways}). Diese Tatsache wird hier nicht bewiesen.
+\textbf{Schritt 1} Für jeden Knoten $v_i \in V$ wird ein sogenannter Diamant-Graph erstellt. Alle Kantenkosten sind dabei genau 1. (Abbildung \ref{fig:lm-tsp-proof-step1}). Die Bezeichner ${N_i, E_i, S_i, W_i}$ stehen dabei für North, East, South und West. Das Spezielle an diesen Diamantgraphen ist, dass sie so konstruiert sind, dass es genau zwei Wege durch sie hindurch gibt, möchte man jeden Knoten genau einmal besuchen. 1) West $\rightleftarrows$ Ost 2) Nord $\rightleftarrows$ Süd (Abbildung \ref{fig:lm-tsp-proof-step1-ways}). Diese Tatsache wird hier nicht bewiesen.
 
 \begin{figure}[H]
 \centering
@@ -203,12 +203,12 @@ Alle Kanten $\{S_i, N_j\}$ (alle Verbindung zwischen dem $S$-Knoten des einen Di
 
 Da $G_O$ ein vollständiger Graph ist, existieren noch viele weitere Kanten (jeder Knoten muss mit jedem anderen Knoten verbunden werden); jede dieser Kanten erhält auch die Kosten $M$. 
 
-Die optimale Tour $\overline{C}$ ist in Abbildung \ref{fig:lm-tsp-proof-step2} eingetragen. Die Kosten $c_O(\overline{C})$ betragen genau $8 \cdot n$ ($7 \cdot n$ in jedem Diamanten plus jeweils die Verbindung \emph{zwischen} den Diamanten).
+Die optimale Tour $\overline{C}$ ist in Abbildung \ref{fig:lm-tsp-proof-step2} eingetragen. Die Kosten $c_O(\overline{C})$ betragen genau $8 \cdot n$ ($7$ in jedem der $n$ Diamanten plus jeweils die Verbindung \emph{zwischen} den Diamanten).
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{lm_tsp_hard_new1.png}
-\caption{}
+\caption{Konstruktion des Graphen aus den einzelnen Diamanten. Die optimale Tour ist gelb eingezeichnet. Ihre Kosten betragen genau $8 \cdot n$.}
 \label{fig:lm-tsp-proof-step2}
 \end{figure}
 
@@ -217,7 +217,7 @@ Die optimale Tour $\overline{C}$ ist in Abbildung \ref{fig:lm-tsp-proof-step2} e
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{lm_tsp_hard_new2.png}
-\caption{}
+\caption{Die originale Tour $\overline{C}$ hat unter der neuen Kostenfunktion $c_N$ die Kosten $8 \cdot n - 1 + M$}
 \label{fig:lm-tsp-proof-step3}
 \end{figure}
 
@@ -228,7 +228,7 @@ Die optimale Tour $\overline{C}$ ist in Abbildung \ref{fig:lm-tsp-proof-step2} e
 
 \subsection{Schwere}
 
-Jetzt wo wir gezeigt haben, dass es hoffnungslos ist, für das Problem $LM-TSP$ ein polynomieller Approximationsalgorithmus mit konstanter relativer Güte finden zu wollen (es sei denn $P = NP$), wenden wir uns einer Version des $LM-TSP$, bei welchem die Dreiecksungleichung gilt: das $\triangle_\beta-TSP$. 
+Jetzt wo wir gezeigt haben, dass es hoffnungslos ist, für das Problem $LM-TSP$ ein polynomieller Approximationsalgorithmus mit konstanter relativer Güte finden zu wollen (es sei denn $P = NP$), wenden wir uns einer Version des $LM-TSP$ zu, bei welchem die Dreiecksungleichung gilt: das $LM - \triangle_\beta-TSP$. 
 
 Wir könnten nun hoffen, dass $LM-\triangle_\beta-TSP \in P$ und wir daher einen Algorithmus finden können, welcher das Problem in Polynomialzeit exakt löst. Im nächsten Beweis wird gezeigt, dass dies nicht der Fall ist.
 
@@ -248,22 +248,22 @@ Der Beweis ist eine Reduktion vom Eingeschränkten Hamilton-Kreis Problem (RHC),
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{rhc_reduction_step1.png}
-\caption{}
+\caption{Das Eingeschränkte Hamilton-Kreis Problem (RHC)}
 \label{fig:rhc-reduction-step1}
 \end{figure}
 
-\textbf{Schritt 1} Wir konstruieren aus $G = (V, E)$ eine Eingabe $I = (G_O, c_N, c_O, \overline{C})$ für $LM-\triangle_\beta-TSP$. Sei $G_O = (V, \tilde{E})$ ein \emph{vollständiger} Graph (mit den gleichen Knoten wie G) und $c_O$ eine Kostenfunktion, welchen einer Kante $e$ den Wert $1$ zuordnet, falls $e$ bereits eine Kante in $G$ war ($e \in E$) oder falls $e = \{v_n, v_1\}$ ist (die Kante, welche im Originalgraphen noch gefehlt hätte, um aus dem Pfad trivialerweise einen Kreis zu machen). Alle anderen Kanten erhalten den Wert $2 \cdot \beta$ (bei $\beta > \frac{1}{2}$ ist dieser Wert immer grösser als $1$). 
+\textbf{Schritt 1} Wir konstruieren aus $G = (V, E)$ eine Eingabe $I = (G_O, c_N, c_O, \overline{C})$ für $LM-\triangle_\beta-TSP$. Sei $G_O = (V, \tilde{E})$ ein \emph{vollständiger} Graph (mit den gleichen Knoten wie G) und $c_O$ eine Kostenfunktion, welchen einer Kante $e$ den Wert $1$ zuordnet, falls $e$ bereits eine Kante in $G$ war ($e \in E$) oder falls $e = \{v_n, v_1\}$ ist (die Kante, welche im Originalgraphen noch gefehlt hätte, um aus dem Pfad trivialerweise einen Kreis zu machen). Alle anderen Kanten erhalten den Wert $2 \cdot \beta$ (bei $\beta > \frac{1}{2}$ ist dieser Wert immer grösser als $1$). Eine optimale Tour $\overline{C}$ bezüglich $c_O$ ist $\overline{C} = (v_1, v_2, \dots, v_n, v_1)$ (wie in Abbildung \ref{fig:rhc-reduction-step3} links).
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{rhc_reduction_step3.png}
-\caption{}
+\caption{Beispiel einer Reduktion $RHC \prec LM-\triangle_\beta-TSP$}
 \label{fig:rhc-reduction-step3}
 \end{figure}
 
-\textbf{Schritt 2} Die Kostenfunktion $c_N$ unterscheidet sich in genau einer Kante und ordnet der Kante $\{v_n, v_1\}$ anstatt den Wert $1$ den Wert $2 \cdot \beta$ zu. Eine optimale Tour $\overline{C}$ bezüglich $c_O$ ist $\overline{C} = (v_1, v_2, \dots, v_n, v_1)$ (wie in Abbildung \ref{fig:rhc-reduction-step3} links).
+\textbf{Schritt 2} Wir konstruieren eine neue Kostenfunktion $c_N$. Sie unterscheidet sich in genau einer Kante $\{v_n, v_1\}$ und ordnet ihr anstatt den Wert $1$ den Wert $2 \cdot \beta$ zu.
 
-\textbf{Schritt 3 - Konklusion} Man kann leicht sehen, dass im Graph $G_O$ unter der Kostenfunktion $c_N$ genau dann eine Tour $C$ mit Kosten $n$ existiert, wenn im ursprünglichen Graph ein Hamilton-Kreis existiert und umgekehrt. Denn nur Kanten, welche im Originalgraphen bereits vorgekommen sind, haben die Kosten 1, alle anderen Kanten haben Kosten $> 1$. 
+\textbf{Schritt 3 - Konklusion} Man kann leicht sehen, dass im Graph $G_O$ unter der Kostenfunktion $c_N$ genau dann eine Tour $C$ mit Kosten $n$ existiert, wenn im ursprünglichen Graph ein Hamilton-Kreis existiert und umgekehrt. Denn nur Kanten, welche im Originalgraphen bereits vorgekommen sind, haben die Kosten 1, alle anderen Kanten haben nun Kosten $> 1$. 
 \end{proof}
 
 \subsection{Ein Approximationsalgorithmus}
@@ -286,7 +286,7 @@ Dann gilt
 
 und 
 
-\[ c(f') \le \beta_1 \cdot (c_1(f) + c_1(e)) \]
+\[ c_1(f') \le \beta_1 \cdot (c_1(f) + c_1(e)) \]
 
 Daraus folgt:
 
@@ -307,11 +307,11 @@ Obwohl für $LM-\triangle_\beta-TSP$ kein Algorithmus existiert, der das Problem
 
 für Eingaben $I = (G, c_O, c_N)$ mit $G = (V, E)$, so dass $c_O$ die $\triangle_{\beta_O}$-Ungleichung und $c_N$ die $\triangle_{\beta_N}$-Ungleichung auf $E$ erfüllt und $\beta_L := \min(\beta_O,\beta_N)$ und $\beta_H := \max(\beta_O,\beta_N)$. 
 
-Das heisst, die Kostenfunktion $c_O$ ist so konstruiert, dass $c_O(\{u,w\}) = \beta_O \cdot (c_O(\{u,v\}) + c_O(\{v,w\}))$. $c_N$ unterscheidet sich in genau einer Kante und erfüllt die Dreiecksungleichung $c_N(\{u,w\}) = \beta_N \cdot (c_N(\{u,v\}) + c_N(\{v,w\}))$. Beide Graphen $G_O$ und $G_N$ enthalten dieselben Knoten und Kante $V$ und $E$.
+Das heisst, die Kostenfunktion $c_O$ ist so konstruiert, dass $c_O(\{u,w\}) = \beta_O \cdot (c_O(\{u,v\}) + c_O(\{v,w\}))$. $c_N$ unterscheidet sich in genau einer Kante und erfüllt die Dreiecksungleichung $c_N(\{u,w\}) = \beta_N \cdot (c_N(\{u,v\}) + c_N(\{v,w\}))$.
 
 \subsubsection{Algorithmus 1}
 
-Der Algorithmus erhält als Eingabe den Graphen $G = (V,E)$, eine originale Kostenfunktion $c_O$, eine optimale Tour unter $c_O$ $\overline{C}$ und eine neue Kostenfunktion $c_N$.
+Der Algorithmus erhält als Eingabe den Graphen $G = (V,E)$, eine originale Kostenfunktion $c_O$, eine optimale Tour $\overline{C}$ unter $c_O$ und eine neue Kostenfunktion $c_N$.
 
 \begin{enumerate}
 \item Sei $e \in E$ die Kante im Graphen wo $c_O(e) \not= c_N(e)$ (die Kante, deren Kosten sich verändert haben). Wir stellen nun eine Menge $P$ zusammen, welche ungeordnete Paare von Kanten $\{f, f'\}$ enthält. $f$ und $f'$ sind dabei Kanten, welche direkt an $e$ angehängt sind (siehe Abbildung \ref{fig:lm-beta-approx1}). Dazu unterscheiden wir zwei Fälle:
@@ -322,14 +322,14 @@ Der Algorithmus erhält als Eingabe den Graphen $G = (V,E)$, eine originale Kost
 In Abbildung \ref{fig:lm-beta-approx1} bilden wir im linken Bild nur Paare unter den $f$ und $f'$ Kanten und unter der $g$ und 
 $g'$ Kanten.
 
-\item[Fall 2: $c_O(e) > c_N(e)$] Wir bilden Paare $\{f, f'\}$ nur zwischen Kanten, die sich an entgegengesetzten Enden von $e$ befinden und zusammen kein Dreieck bilden. Formal: $f \cup f' = \emptyset$ (z.B. $\{v_1, v_2\} \cap \{v_4, v_7\} = \emptyset)$.
+\item[Fall 2: $c_O(e) > c_N(e)$] Die Kosten von $e$ sind gesunken. Wir bilden Paare $\{f, f'\}$ nur zwischen Kanten, die sich an entgegengesetzten Enden von $e$ befinden und zusammen kein Dreieck bilden. Formal: $f \cup f' = \emptyset$ (z.B. $\{v_1, v_2\} \cup \{v_4, v_7\} = \emptyset)$.
 
 Dies ist in Abbildung \ref{fig:lm-beta-approx1} auf der rechten Seite dargestellt.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{lm_beta_approx1.png}
-\caption{}
+\caption{Die möglichen Kantenpaare}
 \label{fig:lm-beta-approx1}
 \end{figure}
 
@@ -337,14 +337,14 @@ Dies ist in Abbildung \ref{fig:lm-beta-approx1} auf der rechten Seite dargestell
 
 \item Danach wird für jedes Paar $\{f, f'\}$ aus $P$ ein Hamilton-Pfad $Q$ zwischen den Knoten aus $f$ und $f'$, welche nicht auch in $e$ vorkommen (formal $(f \cup e)\backslash e$), auf dem Graphen unter Benutzung der Knoten $V\backslash(e\cap(f\cup f'))$ berechnet. Das sind alle Knoten, ausser die, welche $f, f'$ und $e$ gemeinsam haben. Der Pfad $Q$ wird durch die Kanten $f$ und $f'$ und -- falls $c_O(e) > c_N(e)$ (Fall 2) -- durch $e$ ergänzt und bildet so einen Hamilton-Kreis $C_{\{f, f'\}}$. 
 
-Für die Berechnung des Pfades wird ein Algorithmus von Forlizzi et al. verwendet (\cite{for1}). Dieser Algorithmus approximiert den Pfad mit einer relativen Güte von $\frac{5}{3}\beta^2$.
+Für die Berechnung des Pfades wird ein Algorithmus von Forlizzi et al. verwendet (\cite{for1}). Dieser Algorithmus approximiert den Pfad mit einer relativen Güte von $\frac{5}{3}\beta_L^2$.
 
 Der Vorgang ist in Abbildung \ref{fig:lm-beta-approx2} dargestellt.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{lm_beta_approx2.png}
-\caption{}
+\caption{Ein möglicher Hamilton-Pfad jeweils zu einem Hamilton-Kreis vervollständigt}
 \label{fig:lm-beta-approx2}
 \end{figure}
 
@@ -411,7 +411,7 @@ nach $\alpha$ finden wir heraus, dass sofern nicht gilt
 
 bereits eine $\gamma$-Approximation vorliegt und wir fertig sind. Daher nehmen wir an, dass \ref{eq:alpha} gilt.
 
-Wegen Lemma \ref{lemma:1} wissen wir, dass jede an $e$ angrenzende Kante mindestens die Länge $\frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_1\beta_2 + \beta_2}$ haben. Ausserdem gilt $\frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_1\beta_2 + \beta_2}$ $\ge$ $\frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H}$. Da beide Kanten aus $\{f, f'\}$ mindestens diese Länge haben müssen, können wir davon auch die Kleinste nehmen und es gilt immer noch:
+Wegen Lemma \ref{lemma:1} wissen wir, dass jede an $e$ angrenzende Kante mindestens die Länge $\frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_1\beta_2 + \beta_2}$ haben. Ausserdem gilt $\frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_1\beta_2 + \beta_2}$ $\ge$ $\frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H}$. Da beide Kanten aus $\{f, f'\}$ mindestens diese Länge haben müssen, können wir davon auch die kleinste nehmen und es gilt immer noch:
 
 \begin{align*}
 \min\{c(f), c(f')\} \ge \frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H}
@@ -495,7 +495,7 @@ Im Spezialfall des metrischen TSP $LM - \triangle_1 - TSP = LM - \triangle - TSP
 &= \frac{14}{10 + 3 + 3 - 6} = \frac{14}{10} = \frac{7}{5} = 1.4
 \end{align*}
 
-und erzielt somit für das metrische TSP eine bessere relative Güte als der beste bekannte Algorithmus von Christofides, der nur $\frac{3}/{2} = 1.5$ schafft
+Damit erzielt der Algorithmus für das metrische TSP eine bessere relative Güte als der beste bekannte Algorithmus von Christofides, der nur $\frac{3}{2} = 1.5$ schafft
 
 Zudem schlägt er alle bekannten Algorithmen für das $\triangle_\beta-TSP$ auf dem Intervall $1 < \beta < 3.34899$.
 
@@ -515,5 +515,7 @@ Zudem schlägt er alle bekannten Algorithmen für das $\triangle_\beta-TSP$ auf 
   Algorithmis Operations Research 1, 2006, S. 31-45
 
 \end{thebibliography}
+  
+\listoffigures
   
 \end{document}

@@ -1,0 +1,13 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Dreiecksungleichung}}{6}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Dreiecksungleichung mit verschiedenen $\beta $}}{7}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Im ersten Schritt werden alle Knoten aus $V = \{v_1, \dots , v_n \}$ in einen Diamant-Graphen mit allen Kantenkosten = 1 umgewandelt}}{9}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Es existieren genau zwei Wege durch den Diamanten hindurch, m\IeC {\"o}chte man jeden Knoten genau einmal besuchen}}{9}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Konstruktion des Graphen aus den einzelnen Diamanten. Die optimale Tour ist gelb eingezeichnet. Ihre Kosten betragen genau $8 \cdot n$.}}{10}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Die originale Tour $\overline {C}$ hat unter der neuen Kostenfunktion $c_N$ die Kosten $8 \cdot n - 1 + M$}}{11}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Das Eingeschr\IeC {\"a}nkte Hamilton-Kreis Problem (RHC)}}{12}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Beispiel einer Reduktion $RHC \prec LM-\triangle _\beta -TSP$}}{12}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Die m\IeC {\"o}glichen Kantenpaare}}{15}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Ein m\IeC {\"o}glicher Hamilton-Pfad jeweils zu einem Hamilton-Kreis vervollst\IeC {\"a}ndigt}}{16}
