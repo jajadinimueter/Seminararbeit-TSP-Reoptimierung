@@ -3,51 +3,75 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsthm}
 \usepackage{amssymb}
+\usepackage{amsmath}
 \usepackage{ngerman}
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{gensymb}
 \usepackage{float}
+\usepackage{ulem}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.8em}
 
 \title{Reoptimierung am Beispiel des TSP}
 \subtitle{Seminararbeit Theoretische Informatik 6. Semester}
-\author{Florian Müller, flm@fastmailfm, ZHAW}
+\author{Florian Müller, flm@fastmailfm, ZHAW\\\
+Betreuer: H.-J. Böckenhauer, hjb@inf.ethz.ch}
 \date{}
 
 \begin{document}
 
 \maketitle
 
-\begin{abstract}
-\end{abstract}
-
 \tableofcontents
 
 \chapter{Einleitung}
 
-In dieser Arbeit wird anhand des Travelling Salesman Problems (TSP) aufgezeigt,
-inwiefern eine bereits gefundene optimale Lösung wiederverwendet werden kann,
-um eine minimal veränderte Probleminstanz zu approximieren. 
+In dieser Arbeit wird anhand des Travelling Salesman Problems (TSP) aufgezeigt, inwiefern eine bereits gefundene optimale Lösung wiederverwendet werden kann, um eine minimal veränderte Probleminstanz zu approximieren. Die Motivation dahinter ist die Tatsache, dass in vielen Bereichen der Optimierung wie z.B. bei Routing-Problemen oft eine Lösung bereits bekannt ist und sich in einem Schritt nur wenig verändert. Wie etwa in einem Busnetz, dem eine neue Haltestelle hinzugefügt wird. 
 
+Die Arbeit baut hauptsächlich auf zwei Arbeiten von H.-J. Böckenhauer et al. auf: \emph{Reusing Optimal TSP Solutions for Locally Modified Input Instances (Extended Abstract)} (\cite{bok1}) und \emph{On the Hardness of Reoptimization} (\cite{bok2}). Alle Beweise sind daraus entnommen und um zusätzliche Zwischenschritte und Illustrationen ergänzt, um die Materie einem breiteren Zielpublikum näher bringen zu können.
+
+Die Arbeit behandelt zwei Typen des TSP:
+
+\begin{itemize}
+\item Das allgemeine TSP
+\item Das $\triangle_{\beta}-TSP$, welches die abgeschwächte bzw. verstärkte Dreiecksungleichung erfüllt
+\end{itemize}
+
+Beide Typen werden in eine modifizierte Instanz $LM -TSP$ bzw. $LM - \triangle_{\beta}-TSP$ überführt, indem die Kosten genau einer Kante verändert werden, alles andere jedoch gleich bleibt. Formal gibt es immer einen Graphen $G$ mit den Knoten $V$ und den Kanten $E$, eine originale Kostenfunktion $c_O: E \rightarrow \mathbb{Q}^+$, die jeder Kante eine rationale Zahl -- die Kosten -- zuordnet und eine neue Funktion $c_N: E \rightarrow \mathbb{Q}^+$, welche für genau eine Kante einen andere Wert zurück liefert. Ausserdem gehen wir davon aus, dass für $G$ unter der Kostenfunktion $c_O$ bereits eine optimale Tour $\overline{C}$ gefunden wurde. Das ganze Problem ist durch das n-Tupel $(G, c_O, c_N, \overline{C})$ vollständig spezifiziert.
+
+Wir haben natürlich die Hoffnung, dass das Problem viel einfacher wird, weil wir bereits im Besitz einer optimalen Lösung sind und sich nur wenig ändert. Viel einfacher kann heissen:
+
+\begin{enumerate}
+\item Es gibt einen Algorithmus, der das Problem in Polynomialzeit exakt löst.
+\item Und falls es den nicht gibt, so doch wenigstens einen Algorithmus, welcher das Problem in Polynomialzeit mit einer konstanten relativen Güte approximiert und der besser ist als ein Algorithmus, welcher die alte optimale Tour nicht kennt.
+\end{enumerate}
+
+Als erstes werden wir zeigen, dass leider weder für $LM - TSP$ noch $LM - \triangle_\beta - TSP$ ein Polynomialzeit-Algorithmus, welcher das Problem exakt löst (ausser $P = NP$), existiert. Und dass es für $LM - TSP$ sogar nicht mal einen polynomiellen Approximationsalgorithmus mit konstanter relative Güte gibt (ausser $P = NP$).
+
+Für das Problem $LM - \triangle_\beta - TSP$ lässt sich jedoch ein Algorithmus finden, der eine konstante relative Güte in Abhängigkeit von $\beta$ garantiert. Im Spezialfall $ LM - \triangle_1 - TSP$ (das metrische TSP) liefert der Algorithmus eine Approximation von $\frac{7}{5} = 1.4$, was besser ist, als der Algorithmus von Christofides mit einer relativen Güte von $\frac{3}{2} = 1.5$. Auch im fast-metrischen Bereich von $1 < \beta < 3.34899$ liefert der Algorithmus eine bessere Approximationsrate als alle anderen bekannten Algorithmen.
+
+Die Arbeiten von H.-J. Böckenhauer et al. behandeln noch eine weitere TSP-Variante: das metrische TSP mit Deadlines (Zeitschranken) $DL - \triangle TSP$. Bei dieser Art sind zusätzlich gewisse Knoten als Deadlines markiert und erhalten durch eine Funktion $d_O: D \rightarrow \mathbb{Q}^+$ einen Wert -- die Deadline -- zugeordnet. Die Summe der Kosten aller Kanten vom Startknoten $s$ bis zu den Deadline-Knoten darf deren Deadline nicht überschreiten. Die Modifikation in diesem Fall ist die Änderung genau einer Deadline. Es wir eine neue Funktion $c_N: D \rightarrow \mathbb{Q}^+$ definiert, die genau für eine Deadline einen anderen Wert annimmt. 
+
+Für das Original-Problem $DL - \triangle TSP$ ist die beste zu erreichende Approximationsrate $2$. In einem spannenden Beweis wird gezeigt, dass dies auch für $LM - DL - \triangle TSP$ gilt. Der Beweis nimmt dafür an, dass es einen $2 - \epsilon$ Algorithmus gibt mit $\epsilon > 0$ und gelangt zum Ergebnis, dass ein solcher Algorithmus ein anderes Problem $RHP$\footnote{Das eingeschränkte Hamilton-Pfad Problem: Sei $G = (V, E)$ ein Graph, der einen Hamilton-Pfad von $s$ nach $u$ enthält, enthält er noch einen anderen Hamilton-Pfad von $s$ nach $v \not= u$}, von dem bekannt ist, dass es NP-vollständig ist, in Polynomialzeit exakt lösen kann. Dies ist ein Widerspruch. Daraus folgt, dass wir nicht darauf hoffen können, einen besseren Approximationsalgorithmus für $LM - DL - \triangle TSP$ zu finden, als der Algorithmus mit relativer Güte $2$. Die Kenntnis einer optimalen Tour bringt uns bei diesem Problem nichts.
+ 
 \chapter{Grundlagen}
 
-Da die Zielgruppe dieser Arbeit Studenten sind, werden gewisse Grundlagen, welche danach für das Verständnis der Beweisführungen wichtig sind, in diesem Kapitel nochmals kurz aufgefrischt.
+Da die Zielgruppe dieser Arbeit Studenten sind, werden gewisse Grundlagen, welche danach für das Verständnis der Beweisführungen hilfreich sein können, in diesem Kapitel nochmals kurz aufgefrischt.
 
 \section{TSP- Travelling Salesman Problem}
 
 Das Travelling Salesman Problem (TSP) besteht aus einer Probleminstanz $(G, c)$,
-wobei $G = (V, E)$ ein vollständiger ungerichteter Graph und $c = E \rightarrow \mathbb{R}^+$ eine Kostenfunktion ist, welche jeder Kante in $E$ eine reelle Zahl
+wobei $G = (V, E)$ ein vollständiger ungerichteter Graph und $c = E \rightarrow \mathbb{Q}^+$ eine Kostenfunktion ist, welche jeder Kante in $E$ eine rationale Zahl
 zuordnet. Gesucht wird die Tour $T = (v_1, \dots, v_n, v_1)$ von einem
 Startknoten $v_1$ aus durch alle anderen Knoten zurück zum Startknoten mit minimalen Kosten. 
 
 \section{Hamilton-Pfad und Hamilton-Kreis}
 
-Ein Hamilton-Pfad $HP$ ist ein Pfad durch eine Menge von Knoten $V = {v_1, \dots, v_n}$, welcher einmal durch jeden Knoten geht ($HP = (v_1, \dots, v_n)$) und jede Kante höchstens einmal benutzt.
+Ein Hamilton-Pfad $HP$ ist ein Pfad durch eine Menge von Knoten $V = {v_1, \dots, v_n}$, welcher genau einmal durch jeden Knoten geht ($HP = (v_1, \dots, v_n)$).
 
-Ein Hamilton-Kreis $HC$ geht wie der Hamilton-Pfad einmal durch jeden Knoten, muss jedoch im selben Knoten enden, bei dem er gestartet ist ($HC = (v_1, \dots, v_n, v_1)$).
+Ein Hamilton-Kreis $HC$ geht wie der Hamilton-Pfad genau einmal durch jeden Knoten, muss jedoch im selben Knoten enden, bei dem er gestartet ist ($HC = (v_1, \dots, v_n, v_1)$).
 
 \section{Polynomialzeit-Reduktion}
 
@@ -60,11 +84,11 @@ der Reoptimierung benutzt, um zu beweisen, dass diese Probleme NP-schwer sind.
 
 Eine Reduktion in dieser Arbeit hat immer die Form 
 
-$Problem_{NP-vollst"andig} \prec Problem_{zu beweisen NP-schwer}$ 
+$Problem_{NP-vollst"andig} \prec Problem_{zu\; beweisen\; NP-schwer}$ 
 
-und eine erfolgreiche Reduktion sagt aus, dass $Problem_{zu  beweisen NP-schwer}$ mindestens so schwer ist wie $Problem_{NP-vollst"andig}$.
+und eine erfolgreiche Reduktion sagt aus, dass $Problem_{zu\; beweisen\; NP-schwer}$ mindestens so schwer ist wie $Problem_{NP-vollst"andig}$.
 
-Damit werden wir beweisen, dass auch Reoptimierungsprobleme NP-schwer sind und daher kein Polynomialzeit-Algorithmus dafür existiert (ausser $P = NP$).
+Damit werden wir beweisen, dass auch Reoptimierungsprobleme NP-schwer sind und daher kein exakter Polynomialzeit-Algorithmus dafür existiert (ausser $P = NP$).
 
 \section{Metrisches TSP}
 
@@ -72,7 +96,7 @@ Das metrische TSP ist ein Spezialfall des TSP, welches die Dreiecksungleichung e
 
 $c({u, w}) \le c({u, v}) + c({v, w})$
 
-wobei $c$ die Kostenfunktion $c: E \rightarrow \mathbb{R}+$ ist, welche jeder Kante Kosten zuordnet.
+wobei $c$ die Kostenfunktion $c: E \rightarrow \mathbb{Q}^+$ ist, welche jeder Kante Kosten zuordnet.
 
 Dies entspricht den geometrischen Gegebenheiten. Man muss sich das vorstellen,
 wie in Abbildung \ref{fig:trangle-inequality}. Die Kante $c$ kann nur grösser 
@@ -80,28 +104,29 @@ werden, indem man den Winkel zwischen $a$ und $b$ vergrössert. Dies kann man
 höchsten so lange machen, bis der Winkel $180^\degree$ beträgt und $c = a + b$, danach
 wird $c$ wieder kleiner.
 
-\begin{figure}
+\begin{figure}[H]
+\centering
 \includegraphics[width=0.8\textwidth]{triangle_inequality1.png}
 \caption{Dreiecksungleichung}
 \label{fig:trangle-inequality}
 \end{figure}
 
-\section{TSP mit Deadlines}
+%\section{TSP mit Deadlines}
 
 \chapter{Reoptimierung des TSP}
 
 \section{Definitionen}
 
-Dieses Kapitel behandelt drei Arten von Travelling Salesman Problemen:
+Dieses Kapitel behandelt zwei Arten von Travelling Salesman Problemen:
 
 \begin{description}
-\item[$lm-TSP$] 
-Beschreibt das Problem, das als Eingabe einen vollständigen Graphen $G = (V, E)$, eine originale Kostenfunktion $c_O$, eine optimale Tour $\overline{C}$ und eine modifizierte Kostenfunktion $c_N$ bekommt und daraus eine neue optimale Tour $C$ ermitteln soll. Die Kostenfunktion $c_N$ ist so konstruiert, dass sie genau für eine Kante $e$ einen anderen und für alle $E \backslash \{e\}$ denselben Wert wie $c_o$ ausgibt. Formal lautet eine Probleminstanz $I$ für $lm-TSP$ demnach $I = (G, c_O, c_N, \overline{C})$.
+\item[$LM-TSP$] 
+Beschreibt das Problem, das als Eingabe einen vollständigen Graphen $G = (V, E)$, eine originale Kostenfunktion $c_O$, eine optimale Tour $\overline{C}$ und eine modifizierte Kostenfunktion $c_N$ bekommt und daraus eine neue optimale Tour $C$ ermitteln soll. Die Kostenfunktion $c_N$ ist so konstruiert, dass sie genau für eine Kante $e$ einen anderen und für alle $E \backslash \{e\}$ denselben Wert wie $c_O$ ausgibt. Formal lautet eine Probleminstanz $I$ für $LM-TSP$ demnach $I = (G, c_O, c_N, \overline{C})$.
 			    
 Die Knoten- und Kantendefinitionen ändern sich dabei nicht.
 
-\item[$lm-\triangle_\beta-TSP$]
-Ist ein Spezialfall des $lm-TSP$ für Kostenfunktionen $c$, welche folgende Dreiecksungleichung erfüllen:
+\item[$LM-\triangle_\beta-TSP$]
+Ist ein Spezialfall des $LM-TSP$ für Kostenfunktionen $c$, welche folgende Dreiecksungleichung erfüllen:
 
 \[ c(\{u,w\}) \le \beta \cdot (c(\{u,v\} + c(\{u,w\}))) \]
 
@@ -116,13 +141,13 @@ Falls $\beta < 1$ wird von einer verschärften, falls $\beta > 1$ von einer abge
 \label{fig:triangle-inequality-beta}
 \end{figure}
 
-\item[$lm-DL-TSP$]
-
-Das $lm-DL-TSP$ bezieht sich auf TSPs mit Deadlines, welche in den Grundlagen bereits erklärt sind.
-
-Als lokale Modifikation wird bei Deadline-TSPs die Veränderung genau einer Deadline betrachtet. $lm-DL-TSP$ soll unter Berücksichtigung der neuen Deadlines eine neue optimale Tour berechnen.
-
-Die Probleminstanz $I$ kann formal als $I = (G, D, c, d_O, d_N, \overline{C})$ beschrieben werden, wobei $G = (V, E)$ den Graphen darstellt, $D = \{v_1, \dots, v_k \}$ die Deadline-Knoten, $c: E \rightarrow \mathbb{R}^+$ die Kostenfunktion, welche für beide Probleme gilt, $d_O: D \rightarrow \mathbb{R}^+$ die originale Funktion, welche jedem Deadline-Knoten eine Deadline zuordnet und $d_N: D \rightarrow \mathbb{R}^+$ die neue Deadline-Funktion, welche genau einem Knoten eine andere Deadline zuordnet als $d_O$. Gesucht wird die optimale Tour $\overline{C}$ unter Berücksichtigung von $d_N$.
+%\item[$lm-DL-TSP$]
+%
+%Das $lm-DL-TSP$ bezieht sich auf TSPs mit Deadlines, welche in den Grundlagen bereits erklärt sind.
+%
+%Als lokale Modifikation wird bei Deadline-TSPs die Veränderung genau einer Deadline betrachtet. $lm-DL-TSP$ soll unter Berücksichtigung der neuen Deadlines eine neue optimale Tour berechnen.
+%
+%Die Probleminstanz $I$ kann formal als $I = (G, D, c, d_O, d_N, \overline{C})$ beschrieben werden, wobei $G = (V, E)$ den Graphen darstellt, $D = \{v_1, \dots, v_k \}$ die Deadline-Knoten, $c: E \rightarrow \mathbb{R}^+$ die Kostenfunktion, welche für beide Probleme gilt, $d_O: D \rightarrow \mathbb{R}^+$ die originale Funktion, welche jedem Deadline-Knoten eine Deadline zuordnet und $d_N: D \rightarrow \mathbb{R}^+$ die neue Deadline-Funktion, welche genau einem Knoten eine andere Deadline zuordnet als $d_O$. Gesucht wird die optimale Tour $\overline{C}$ unter Berücksichtigung von $d_N$.
 
 \end{description}
 
@@ -130,12 +155,12 @@ Die Probleminstanz $I$ kann formal als $I = (G, D, c, d_O, d_N, \overline{C})$ b
 
 Es ist allgemein bekannt, dass falls $P \not= NP$, es keinen polynomiellen Approximationsalgorithmus mit konstanter relativer Güte r für das allgemeine TSP (ohne Einschränkungen) gibt. Das heisst, eine Garantie, dass das Verhältnis $g = \frac{Solution_{found}}{Solution_{optimal}}$ für jede Eingabe kleiner gleich einem bestimmten \emph{konstanten} Wert $r$ ist (wie z.B. $\frac{3}{2}$).
 
-Wir zeigen anhand eines Beweises von H.-J.-Böckenhauer et. al. (\cite{bok1}), dass dies auch für $lm-TSP$ gilt. Das heisst, das Problem wird nicht leichter, obwohl die Änderung nur eine einzige Kante betrifft und eine optimale Lösung für das Originalproblem bereits ermittelt wurde.
+Wir zeigen anhand eines Beweises von H.-J.-Böckenhauer et al. (\cite{bok1}), dass dies auch für $LM-TSP$ gilt. Das heisst, das Problem wird nicht leichter, obwohl die Änderung nur eine einzige Kante betrifft und eine optimale Lösung für das Originalproblem bereits ermittelt wurde.
 
 Des weiteren wird gezeigt, dass das Problem einfacher wird, wenn wir fordern, dass die $\beta-$-Dreiecksungleichung eingehalten werden muss. Daraus ergibt sich das Problem $lm-\triangle_\beta-TSP$. H.-J. Böckenhauer et. al. (\cite{bok1}, \cite{bok2}) konnten für eine Teilklasse dieser Probleme mit $\beta > \frac{1}{2}$ zeigen, dass dieses Problem weiterhin NP-schwer ist, dass jedoch ein polynomieller Approximationsalgorithmus mit konstanter relativer Güte existiert, welche nur vom Parameter $\beta$ abhängt. Die relative Güte verbessert sich im metrischen Fall $lm-\triangle_1-TSP = lm-\triangle-TSP$ gegenüber der bisher durch den Algorithmus von Christofides erreichten 1.5 auf 1.4 und schlägt auch im Bereich von $1 < \beta < 3.34899$ alle bisher bekannte Algorithmen (\cite{bok1} S. 253).
 
-Schlussendlich wird anhand H.-J. Böckenhauer et. al. (\cite{bok2}) bewiesen, 
-dass im Fall des TSP mit Deadlines $LM-DL-TSP$ jeder polynomielle Approximationsalgorithmus für die relative Güte eine untere Schranke von $(2-\epsilon)$ für jedes $\epsilon > 0$ nicht unterschreiten kann. Diese Schranke gilt auch für das Originalproblem $DL-TSP$, was uns zeigt, dass wir im Fall von $LM-DL-TSP$ keinen Vorteil daraus gewinnen können, dass wir bereits eine Lösung für das Originalproblem kennen.
+%Schlussendlich wird anhand H.-J. Böckenhauer et. al. (\cite{bok2}) bewiesen, 
+%dass im Fall des TSP mit Deadlines $LM-DL-TSP$ jeder polynomielle Approximationsalgorithmus für die relative Güte eine untere Schranke von $(2-\epsilon)$ für jedes $\epsilon > 0$ nicht unterschreiten kann. Diese Schranke gilt auch für dagezeigtens Originalproblem $DL-TSP$, was uns zeigt, dass wir im Fall von $LM-DL-TSP$ keinen Vorteil daraus gewinnen können, dass wir bereits eine Lösung für das Originalproblem kennen.
 
 Alle Beweise basieren auf den Arbeiten \cite{bok1} und \cite{bok2} von H.-J. Böckenhauer et. al.
 
@@ -249,6 +274,7 @@ Zuerst stellen wir etwas in einem Lemma fest, welches wir danach im Beweis brauc
 
 \begin{lemma1}
 Sei $G = (V, E)$ ein Graph. Seien $c_1$ und $c_2$ Kostenfunktionen auf diesem Graphen, die in genau einer Kante $e$ unterschiedlich sind und für die gilt $c_1(e) \le c_2(e)$. Seien und $\beta_1, \beta_2 \ge 1$ durch $c_1$ und $c_2$ auf $E$ gegeben. Dann gilt, jede Kante, die direkt an $e$ anschliesst hat mindestens die Kosten $\frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_1\beta_2 + \beta_2}$. Im Spezialfall $\beta_1 = \beta_2 = 1$ sind die Kosten mindestens $\frac{1}{2} \cdot (c_2(e) - c_1(2))$.
+\label{lemma:1}
 \end{lemma1}
 
 \begin{proof}[Beweis]
@@ -273,7 +299,7 @@ und somit:
 der gleiche Beweis kann auf dieselbe Weise für $c_1$ geführt werden.
 \end{proof}
 
-
+\subsubsection{Ergebnis}
 
 Obwohl für $LM-\triangle_\beta-TSP$ kein Algorithmus existiert, der das Problem in Polynomialzeit exakt löst, können wir immer noch auf einen polynomiellen Approximationsalgorithmus mit konstanter relativer Güte hoffen. Tatsächlich haben H.-J. Böckenhauer et. al. (\cite{bok1}, \cite{bok2}) gezeigt, dass es einen solchen Algorithmus gibt, welcher das Problem in Abhängigkeit von $\beta$ (und nicht in Abhängigkeit der Anzahl Knoten $n$) approximiert. Er garantiert eine  relative Güte von
 
@@ -311,7 +337,7 @@ Dies ist in Abbildung \ref{fig:lm-beta-approx1} auf der rechten Seite dargestell
 
 \item Danach wird für jedes Paar $\{f, f'\}$ aus $P$ ein Hamilton-Pfad $Q$ zwischen den Knoten aus $f$ und $f'$, welche nicht auch in $e$ vorkommen (formal $(f \cup e)\backslash e$), auf dem Graphen unter Benutzung der Knoten $V\backslash(e\cap(f\cup f'))$ berechnet. Das sind alle Knoten, ausser die, welche $f, f'$ und $e$ gemeinsam haben. Der Pfad $Q$ wird durch die Kanten $f$ und $f'$ und -- falls $c_O(e) > c_N(e)$ (Fall 2) -- durch $e$ ergänzt und bildet so einen Hamilton-Kreis $C_{\{f, f'\}}$. 
 
-Für die Berechnung des Pfades wird ein Algorithmus von Forlizzi et al. verwendet (\cite{for1}).
+Für die Berechnung des Pfades wird ein Algorithmus von Forlizzi et al. verwendet (\cite{for1}). Dieser Algorithmus approximiert den Pfad mit einer relativen Güte von $\frac{5}{3}\beta^2$.
 
 Der Vorgang ist in Abbildung \ref{fig:lm-beta-approx2} dargestellt.
 
@@ -322,10 +348,156 @@ Der Vorgang ist in Abbildung \ref{fig:lm-beta-approx2} dargestellt.
 \label{fig:lm-beta-approx2}
 \end{figure}
 
-\item Im letzten Schritt wählt der Algorithmus die Tour $C$ mit den geringsten Kosten aus der Menge $\{\overline{C}\} \cup \{C_{\{f, f'\}} | \{f, f'\} \in P \}$ (die Menge aller berechneten Touren inklusive der optimalen Tour unter $c_O$) aus.
+\item Im letzten Schritt wählt der Algorithmus die Tour $C$ mit den geringsten Kosten aus der Menge $\{\overline{C}\} \cup \{C_{\{f, f'\}} | \{f, f'\} \in P \}$ (die Menge aller berechneten Touren inklusive der optimalen Tour unter $c_O$ aus.
 \end{enumerate}
 
 Der Algorithmus gibt den Hamilton-Kreis $C$ aus.
+
+\subsubsection{Beweis}
+
+\begin{proof}[Beweis]
+Sei $\{c_1, c_2\} = \{c_O, c_N\}$ so dass $c_1(e) \le c_2(e)$. Das heisst, falls die Kante $e$ kürzer wird, ist $c_1 = c_N$, falls sie grösser wird ist $c_1 = c_O$.
+
+Wir können annehmen, dass Touren in $G$ unter $c_N$ die Kante $e$ genau dann benutzen, wenn $c_1 = c_N$, das heisst, wenn die Kosten von $e$ kleiner geworden sind. Falls sie das nicht tun würden, hätte $e$ überhaupt keinen Einfluss auf das Geschehen und $\overline{C}$ wäre weiterhin eine optimale Tour. 
+
+Wir wählen eine solche optimale Tour $C_{OPT}$ in $G$ unter $c_N$ aus und nehmen an, dass die Tour die an $e$ angrenzenden Kanten $\{f, f'\}$ benutzt (falls sie durch $e$ geht, muss sie zwingend ein solches paar von Kanten nutzen).
+
+Sei nun der Pfad $P$ die Tour $C_{OPT}$ ohne die Kanten $f$ und $f'$ und ohne $e$, falls $c_N(e) > c_O(e)$. Dadurch ergibt sich eine relative Approximations-Garantie von 
+
+\[ \frac{c_N(C_{OPT}) - c_N(P) + \frac{5}{3}\beta_L^2 c_N(P)}{OT_{G_{c_N}}} \]
+
+(mit $OT_{G_{c_N}} =$ die Länge der optimalen Tour in G bezüglich $c_N$). 
+
+Dies kann zu
+
+\[ \frac{c_N(C_{OPT})}{OT_{G_{c_N}}} - \frac{c_N(P)}{OT_{G_{c_N}}} + \frac{\frac{5}{3}\beta_L^2 c_N(P)}{OT_{G_{c_N}}} \]
+
+und schliesslich zu
+
+\[ 1 - \frac{c_N(P)}{OT_{G_{c_N}}} + \frac{5}{3}\beta_L^2 \frac{c_N(P)}{OT_{G_{c_N}}} \]
+
+vereinfacht werden.
+
+Es werden nun zwei Variabeln eingeführt:
+
+\[ \alpha = \frac{c_N(P)}{OT_{G_{c_N}}} \]
+
+und damit wir nicht so viel schreiben müssen
+
+\begin{align}
+\gamma = \beta_L\beta_H \cdot \frac{15\beta_L^2 + 5\beta_L - 6}{10\beta_L^2 + 3\beta_L\beta_H + 3\beta_H -6}
+\label{eq:gamma}
+\end{align}
+
+damit vereinfachen wir den obigen Term auf:
+
+\begin{align*}
+& 1 - \frac{c_N(P)}{OT_{G_{c_N}}} + \frac{5}{3}\beta_L^2 \frac{c_N(P)}{OT_{G_{c_N}}}\\
+&= 1 - \alpha + \frac{5}{3}\beta_L^2\alpha
+\end{align*}
+
+Durch Auflösen der Ungleichung 
+
+\begin{align*}
+1 - \alpha + \frac{5}{3}\beta_L^2\alpha \le \gamma
+\end{align*}
+
+nach $\alpha$ finden wir heraus, dass sofern nicht gilt
+
+\begin{align}
+\alpha > \frac{\gamma - 1}{\frac{5}{3}\beta_L^2 - 1}
+\label{eq:alpha}
+\end{align}
+
+bereits eine $\gamma$-Approximation vorliegt und wir fertig sind. Daher nehmen wir an, dass \ref{eq:alpha} gilt.
+
+Wegen Lemma \ref{lemma:1} wissen wir, dass jede an $e$ angrenzende Kante mindestens die Länge $\frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_1\beta_2 + \beta_2}$ haben. Ausserdem gilt $\frac{c_2(e) - \beta_1\beta_2 c_1(e)}{\beta_1\beta_2 + \beta_2}$ $\ge$ $\frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H}$. Da beide Kanten aus $\{f, f'\}$ mindestens diese Länge haben müssen, können wir davon auch die Kleinste nehmen und es gilt immer noch:
+
+\begin{align*}
+\min\{c(f), c(f')\} \ge \frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H}
+\end{align*}
+
+Daraus folgt
+
+\begin{align*}
+1 - \alpha \ge \frac{2}{OT_{G_{c_N}}} \cdot \frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H}
+\end{align*}
+
+Dafür muss man sich daran erinnern, dass
+
+\begin{align*}
+1 - \alpha = 1 - \frac{c_N(P)}{OT_{G_{c_N}}} = \frac{OT_{G_{c_N}} - c_N(P)}{OT_{G_{c_N}}} = \frac{c_N(f) + c_N(f') \uwave{(+ c_N(e))}}{OT_{G_{c_N}}}
+\end{align*}
+
+wobei $c_N(e)$ dabei ist oder nicht.
+
+In jedem Fall gilt, dass $c_N(f) + c_N(f') \uwave{(+ c_N(e))}$ grösser oder gleich zweimal die Kosten der kleineren angrenzenden Kante $\min\{c(f), c(f')\}$ ist.
+
+Zusammen mit \ref{eq:alpha} ergibt das
+
+\begin{align*}
+1 - \frac{\gamma - 1}{\frac{5}{3}\beta_L^2 - 1} &\ge \frac{2}{OT_{G_{c_N}}} \cdot \frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H} \\
+1 - \frac{2}{OT_{G_{c_N}}} \cdot \frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H} &\ge \frac{\gamma - 1}{\frac{5}{3}\beta_L^2 - 1} \\
+\frac{\gamma - 1}{\frac{5}{3}\beta_L^2 - 1} &\le 1 - \frac{2}{OT_{G_{c_N}}} \cdot \frac{c_2(e) - \beta_L\beta_H c_1(e)}{\beta_L\beta_H + \beta_H} 
+\end{align*}
+
+durch Multiplikation von $\beta_L\beta_H + \beta_H$, durch Teilen durch $2$ auf beiden Seiten erhalten wir
+
+\begin{align*}
+\frac{(\gamma - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2} &\le \frac{\beta_L\beta_H + \beta_H}{2} - \frac{c_2(e) - \beta_L\beta_H c_1(e)}{OT_{G_{c_N}}}\\
+(\text{... und noch}&\text{ etwas umformen ...})\\
+\frac{c_2(e) - \beta_L\beta_H c_1(e)}{OT_{G_{c_N}}} &\le \frac{\beta_L\beta_H + \beta_H}{2} - \frac{(\gamma - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2}\\
+\end{align*}
+
+Jetzt wird auf beiden Seiten $(\beta_L\beta_H - 1) \cdot  \frac{c_1(e)}{OT_{G_{c_N}}}$ dazu addiert. Das ergibt
+
+\begin{align*}
+\frac{c_2(e) - c_1(e)}{OT_{G_{c_N}}} &\le \frac{\beta_L\beta_H + \beta_H}{2} - \frac{(\gamma - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2} + (\beta_L\beta_H - 1) \cdot \frac{c_1(e)}{OT_{G_{c_N}}}\\
+\end{align*}
+
+und weil $\frac{c_1(e)}{OT_{G_{c_N}}}$ immer kleiner als $1$ ist, können wir dafür den Maximalwert $1$ annehmen und die Ungleichung stimmt trotzdem noch. Damit bekommen wir
+
+\begin{align*}
+\frac{c_2(e) - c_1(e)}{OT_{G_{c_N}}} &\le \frac{\beta_L\beta_H + \beta_H}{2} - \frac{(\gamma - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2} + (\beta_L\beta_H - 1) \cdot 1\\
+&(\text{...} (\beta_L\beta_H - 1)\text{ mit 2 erweitern ...})\\
+&\le \frac{\beta_L\beta_H + \beta_H}{2} + \frac{2\cdot \beta_L\beta_H - 2}{2} - \frac{(\gamma - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2}\\
+&\le \frac{3\beta_L\beta_H + \beta_H - 2}{2} - \frac{(\gamma - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2}\\
+&\le \frac{3}{2}\cdot\beta_L\beta_H + \frac{1}{2}\cdot\beta_H - 1 - \frac{(\gamma - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2}\\
+\end{align*}
+
+Nun setzen wir den Wert aus \ref{eq:gamma} für $\gamma$ ein und erhalten dadurch:
+
+\begin{align*}
+&\frac{c_2(e) - c_1(e)}{OT_{G_{c_N}}} \le \frac{3}{2}\cdot\beta_L\beta_H + \frac{1}{2}\cdot\beta_H - 1 - \frac{(\gamma - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2}\\
+&= \frac{\beta_L\beta_H + \beta_H}{2} -  \frac{3}{2}\cdot\beta_L\beta_H + \frac{1}{2}\cdot\beta_H - 1 - \frac{(\beta_L\beta_H \cdot \frac{15\beta_L^2 + 5\beta_L - 6}{10\beta_L^2 + 3\beta_L\beta_H + 3\beta_H -6} - 1)\cdot(\beta_L\beta_H + \beta_H)}{\frac{10}{3}\beta_L^2 - 2}\\
+&\text{\dots nach m"uhsamen Berechnungen erhalten wir schliesslich \dots}\\
+&= \text{\dots} = \beta_L\beta_H \cdot \frac{15\beta_L^2 + 5\beta_L - 6}{10\beta_L^2 + 3\beta_L\beta_H + 3\beta_H -6} - 1 = \gamma - 1
+\end{align*}
+
+und damit 
+
+
+\begin{align*}
+&\frac{c_2(e) - c_1(e)}{OT_{G_{c_N}}} \le \gamma - 1\\
+&\Rightarrow 1 + \frac{c_2(e) - c_1(e)}{OT_{G_{c_N}}} \le \gamma\\
+&\Rightarrow \frac{OT_{G_{c_N}}}{OT_{G_{c_N}}} + \frac{c_2(e) - c_1(e)}{OT_{G_{c_N}}} \le \gamma\\
+&\Rightarrow \frac{OT_{G_{c_N}} + (c_2(e) - c_1(e))}{OT_{G_{c_N}}} \le \gamma\\
+\end{align*}
+
+Dieses Ergebnis sagt uns, dass, falls die Kosten für die Kante $e$ gestiegen sind (dann ist $c_2 = c_N$) und wir einfach weiterhin diese Kante benutzen und dadurch höchsten $c_2(e) - c_1(e)$ über dem Optimum sind, da wir ja bereits von einer optimalen Lösung ausgehen, ist unsere Approximierungsrate trotzdem noch kleiner als $\gamma$. Damit erreicht der Algorithmus in jedem Fall eine Approximierungsrate von $\gamma = \beta_L\beta_H \cdot \frac{15\beta_L^2 + 5\beta_L - 6}{10\beta_L^2 + 3\beta_L\beta_H + 3\beta_H -6}$
+\end{proof}
+
+Im Spezialfall des metrischen TSP $LM - \triangle_1 - TSP = LM - \triangle - TSP$ betragen $\beta_L = \beta_H = 1$ und somit
+
+\begin{align*}
+\gamma &= \beta_L\beta_H \cdot \frac{15\beta_L^2 + 5\beta_L - 6}{10\beta_L^2 + 3\beta_L\beta_H + 3\beta_H -6}\\
+&= 1 \cdot \frac{15 + 5 - 6}{10 + 3 - 6}\\
+&= \frac{14}{10 + 3 + 3 - 6} = \frac{14}{10} = \frac{7}{5} = 1.4
+\end{align*}
+
+und erzielt somit für das metrische TSP eine bessere relative Güte als der beste bekannte Algorithmus von Christofides, der nur $\frac{3}/{2} = 1.5$ schafft
+
+Zudem schlägt er alle bekannten Algorithmen für das $\triangle_\beta-TSP$ auf dem Intervall $1 < \beta < 3.34899$.
 
 \begin{thebibliography}{9}
 

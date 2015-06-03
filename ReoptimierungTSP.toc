@@ -1,15 +1,16 @@
-\contentsline {chapter}{\numberline {1}Einleitung}{4}
+\contentsline {chapter}{\numberline {1}Einleitung}{3}
 \contentsline {chapter}{\numberline {2}Grundlagen}{5}
 \contentsline {section}{\numberline {2.1}TSP- Travelling Salesman Problem}{5}
 \contentsline {section}{\numberline {2.2}Hamilton-Pfad und Hamilton-Kreis}{5}
 \contentsline {section}{\numberline {2.3}Polynomialzeit-Reduktion}{5}
 \contentsline {section}{\numberline {2.4}Metrisches TSP}{6}
-\contentsline {section}{\numberline {2.5}TSP mit Deadlines}{6}
 \contentsline {chapter}{\numberline {3}Reoptimierung des TSP}{7}
 \contentsline {section}{\numberline {3.1}Definitionen}{7}
 \contentsline {section}{\numberline {3.2}Ziele}{8}
-\contentsline {section}{\numberline {3.3}Die Schwere von $LM-TSP$}{9}
+\contentsline {section}{\numberline {3.3}Die Schwere von $LM-TSP$}{8}
 \contentsline {section}{\numberline {3.4}$LM-\triangle _\beta -TSP$}{11}
 \contentsline {subsection}{\numberline {3.4.1}Schwere}{11}
 \contentsline {subsection}{\numberline {3.4.2}Ein Approximationsalgorithmus}{13}
+\contentsline {subsubsection}{\nonumberline Ergebnis}{14}
 \contentsline {subsubsection}{\nonumberline Algorithmus 1}{14}
+\contentsline {subsubsection}{\nonumberline Beweis}{16}
